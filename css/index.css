@@ -1,0 +1,31 @@
+.bigBox{
+    width:100%;
+    height:2.5rem;
+    float: left;
+}
+.bigBox .imgBox{
+    width:1.3rem;
+    height: 1.3rem;
+    position: relative;
+    float: left;
+}
+.bigBox .imgBox .files{
+    opacity: 0;
+    z-index: 1;
+}
+.bigBox .imgBox .imgs{
+    z-index: 2;
+}
+.bigBox .imgBox .files,.bigBox .imgBox .imgs{
+    position: absolute;
+    left: 0px;
+    top:0px;
+}
+.bigBox .imgBox .del{
+    position: absolute;
+    right: 0rem;
+    bottom:0rem;
+    width:.4rem;
+    height: .4rem;
+    z-index: 3;
+}
