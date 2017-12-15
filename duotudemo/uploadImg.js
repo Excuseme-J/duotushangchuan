@@ -1,6 +1,7 @@
 // var imgSrc = []; //图片路径
 // var imgFile = []; //文件流
 // var imgName = []; //图片名字
+
 var imgSrcArr = []; //图片路径
 var imgFileArr = []; //文件流
 var imgNameArr = []; //图片名字
