@@ -41,25 +41,20 @@
 </head>
 <body>
 	<form action="">
-		<div class="bigBox" data-mid="5">
+		<div class="bigBox">
 			<div class="imgBox">
-				<input type="file" id="file1" class="files">
-				<img src="image/add_media.png" alt="" id="img1" class="imgs">
+				<input type="file" class="files">
+				<img src="image/add_media.png" alt=""  class="imgs">
 			</div>
-			
 		</div>
-		
 	</form>
 	<script>
-		// $(".imgBox .imgs").click(function(){
-		// 	$(".imgBox .files").click();
-		// });
 		var imgs= document.getElementsByClassName("imgs");
 		var imgFiles = document.getElementsByClassName("files");
 		var posBB = '';
-		var imgSrcArr = []; //图片路径
-		var imgFileArr = []; //文件流
-		var imgNameArr = []; //图片名字
+		var imgSrcArr = []; //图片路径 待扩展
+		var imgFileArr = []; //文件流 待扩展
+		var imgNameArr = []; //图片名字 待扩展
 		var index = '';
 		var num = 5;
 		for (var i = 0; i < imgs.length; i++) {
