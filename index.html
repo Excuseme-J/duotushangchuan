@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src='js/jquery.min.js'></script>
+	<style>
+		.bigBox{
+			width:500px;
+			height:200px;
+		}
+		.bigBox .imgBox{
+			width:100px;
+			height: 100px;
+			position: relative;
+			float: left;
+		}
+		.bigBox .imgBox .files{
+			opacity: 0;
+			z-index: 1;
+		}
+		.bigBox .imgBox .imgs{
+			z-index: 2;
+		}
+		.bigBox .imgBox .files,.bigBox .imgBox .imgs{
+			width:100px;
+			height: 100px;
+			position: absolute;
+			left: 0px;
+			top:0px;
+		}
+		.bigBox .imgBox .del{
+			position: absolute;
+			left: 0;
+			top:0;
+			width:10px;
+			height: 10px;
+			background-color: red;
+			z-index: 3;
+		}
+	</style>
+</head>
+<body>
+	<form action="">
+		<div class="bigBox" data-mid="5">
+			<div class="imgBox">
+				<input type="file" id="file1" class="files">
+				<img src="image/下载.jpg" alt="" id="img1" class="imgs">
+			</div>
+			
+		</div>
+		
+	</form>
+	<script>
+		// $(".imgBox .imgs").click(function(){
+		// 	$(".imgBox .files").click();
+		// });
+		var imgs= document.getElementsByClassName("imgs");
+		var imgFiles = document.getElementsByClassName("files");
+		var posBB = '';
+		var imgSrcArr = []; //图片路径
+		var imgFileArr = []; //文件流
+		var imgNameArr = []; //图片名字
+		var index = '';
+		var num = 5;
+		for (var i = 0; i < imgs.length; i++) {
+			imgs[i].index = i;
+			imgs[i].onclick = function (){
+				var clickNum = $(this).parent().siblings().length;
+				if(clickNum > num){
+					alert("够多了");
+				}else{
+					$(this).siblings("input").click();
+				}
+			}
+		};
+		$(".del").click(function(){
+			remove($(this)[0])
+		})
+		for (var j = 0; j < imgFiles.length; j++) {
+			imgFiles[j].index = j;
+			imgFiles[j].onchange = function(){
+				yulan(this);
+			}
+		};
+		function inputClick(_this){
+			console.log($(_this).parent().siblings().length);
+			var clickNum = $(_this).parent().siblings().length;
+			if(clickNum > num){
+				alert("够多了")
+			}else{
+				$(_this).siblings("input").click();
+			}	
+		}
+		//删除
+		function remove(_this){
+			var parLen =  $(_this).parent().siblings();
+			var mid = $(_this).parent().parent().data("mid");
+			console.log($(_this).parent().siblings());
+			console.log($(_this).parent().siblings().length);
+			$(_this).parent().remove();
+			
+			for (var i = 0; i < parLen.length-1; i++) {
+				parLen.eq(i).find("input").attr("name","pic_" + mid + "_" + (i-1) );
+			};
+		}
+		//预览
+		function yulan(_this) {
+		    index = _this.index;
+		    var boxLen = $(_this).parent().siblings().length;
+		    var index2 = $(_this).parent().index();
+		    var index1 = index2-1;
+		  
+		    console.log(boxLen,index2)
+		    var fileImg = $(_this)[0];
+		    var fileList = fileImg.files;
+		    for(var i = 0; i < fileList.length; i++) {
+		        var imgSrcI = getObjectURL(fileList[i]);
+		        // imgSrcArr[index].push(imgSrcI);
+		        // imgFileArr[index].push(fileList[i]);
+		        // imgNameArr[index].push(fileList[i].name);
+		        if(posBB == _this || index2 != boxLen){
+		            $(_this).siblings("img").attr("src",imgSrcI);
+		        }else{
+		            $(_this).siblings("img").attr("src",imgSrcI);
+		            $(_this).after('<span class="del" onclick=remove(this)></span>');
+		            var mid = $(_this).parent().parent().data("mid");
+		            $(_this).attr("name","pic_" + mid + "_" + index1);
+		            if(boxLen < num-1){
+		            	$(_this).parent().after('<div class="imgBox"><input type="file" name="" onchange=yulan(this) class="files"><img src="image/下载.jpg" alt="" id="img1"class="imgs" onclick=inputClick(this)></div>');
+		            }
+		            
+		        }
+
+		    }
+		    posBB = _this;
+		}
+		//图片预览路径
+		function getObjectURL(file) {
+			var url = null;
+			if(window.createObjectURL != undefined) { // basic
+				url = window.createObjectURL(file);
+			} else if(window.URL != undefined) { // mozilla(firefox)
+				url = window.URL.createObjectURL(file);
+			} else if(window.webkitURL != undefined) { // webkit or chrome
+				url = window.webkitURL.createObjectURL(file);
+			}
+			return url;
+		}
+	</script>
+</body>
+</html>
