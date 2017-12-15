@@ -80,7 +80,7 @@
 		function inputClick(_this){
 			console.log($(_this).parent().siblings().length);
 			var clickNum = $(_this).parent().siblings().length;
-			if(clickNum > num){
+			if(clickNum > num){//这里是非必要的，到指定数目，就不会生成，所以这个判断是多余的
 				alert("够多了")
 			}else{
 				$(_this).siblings("input").click();
